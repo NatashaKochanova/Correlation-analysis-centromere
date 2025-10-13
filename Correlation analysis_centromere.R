@@ -38,8 +38,7 @@ write_xlsx(m3_cor_CPC_KI67, "corr_matrix_CPC_KI67.xlsx")
 
 m3_cor_CENPsNDC80cm <- m3_cor[, grep("CENP|NDC80|NUF2|SPC24|SPC25", colnames(m3_cor))]
 m3_cor_CENPsNDC80cm <- as.data.frame(m3_cor_CENPsNDC80cm)
-m3_cor_CENPsNDC80cm$IDs <- rownames(m3_cor)
-write_xlsx(m3_cor_CENPsNDC80cm, "corr_matrix_CENPsNDC80.xlsx")
+
 ## Exclude CENP-F
 m3_cor_CENPsNDC80cm <- m3_cor_CENPsNDC80cm[, -1]
 m3_cor_CENPsNDC80cm <- as.matrix(m3_cor_CENPsNDC80cm)
@@ -52,12 +51,17 @@ row.names <- c(
   "Q9HBM1.SPC25_HUMAN"
 )
 m3_cor_CENPsNDC80cm <- m3_cor_CENPsNDC80cm[, row.names]
+m3_cor_CENPsNDC80cm <- as.data.frame(m3_cor_CENPsNDC80cm)
+m3_cor_CENPsNDC80cm$IDs <- rownames(m3_cor)
+write_xlsx(m3_cor_CENPsNDC80cm, "CENPs_NDC80_corrs_Goncalves.xlsx")
+
+m3_cor_CENPsNDC80cm <- as.matrix(m3_cor_CENPsNDC80cm)
 colnames(m3_cor_CENPsNDC80cm) <- gsub(".*\\.(.*)\\_.*", "\\1", colnames(m3_cor_CENPsNDC80cm))
 
 m3_cor_CENPsNDC80cm_m <- melt(m3_cor_CENPsNDC80cm)
 m3_cor_CENPsNDC80cm_m$value <- as.numeric(m3_cor_CENPsNDC80cm_m$value)
 
-p_cd <- ggplot(m3_cor_CENPsNDC80cm_m, mapping = aes(x = `X2`, y = `value`)) +
+p_cd <- ggplot(m3_cor_CENPsNDC80cm_m, mapping = aes(x = `Var2`, y = `value`)) +
   geom_boxplot() +
   ylim(-1, 1) +
   xlab("Protein") +
@@ -162,6 +166,13 @@ dk3_cor_CENP_A_B_C <- as.data.frame(dk3_cor_CENP_A_B_C)
 dk3_cor_CENP_A_B_C$IDs <- rownames(dk3_cor)
 write_xlsx(dk3_cor_CENP_A_B_C, "corr_matrix_knoll_CENP_A_B_C.xlsx")
 
+# Subset correlations for Ki-67 and CPC
+
+dk3_cor_CPC_KI67 <- dk3_cor[, grep("AURKB|BIRC5|BOREA|INCE|KI67", colnames(dk3_cor))]
+dk3_cor_CPC_KI67 <- as.data.frame(dk3_cor_CPC_KI67)
+dk3_cor_CPC_KI67$IDs <- rownames(dk3_cor)
+write_xlsx(dk3_cor_CPC_KI67, "corr_matrix_CPC_KI67_knoll.xlsx")
+
 # Subset and plot correlation ranges for for CENPs and NDC80
 
 dk3_cor_CENPsNDC80cm <- dk3_cor[, grep("CENP|NDC80|NUF2|SPC24|SPC25", colnames(dk3_cor))]
@@ -178,6 +189,11 @@ row.names <- c(
   "O14777.NDC80_HUMAN", "Q9BZD4.NUF2_HUMAN", "Q8NBT2.SPC24_HUMAN", "Q9HBM1.SPC25_HUMAN"
 )
 dk3_cor_CENPsNDC80cm <- dk3_cor_CENPsNDC80cm[, row.names]
+dk3_cor_CENPsNDC80cm <- as.data.frame(dk3_cor_CENPsNDC80cm)
+dk3_cor_CENPsNDC80cm$IDs <- rownames(dk3_cor)
+write_xlsx(dk3_cor_CENPsNDC80cm, "CENPs_NDC80_corrs_Knol.xlsx")
+
+dk3_cor_CENPsNDC80cm <- as.matrix(dk3_cor_CENPsNDC80cm)
 colnames(dk3_cor_CENPsNDC80cm) <- gsub(".*\\.(.*)\\_.*", "\\1", colnames(dk3_cor_CENPsNDC80cm))
 
 dk3_cor_CENPsNDC80cm_m <- melt(dk3_cor_CENPsNDC80cm)
